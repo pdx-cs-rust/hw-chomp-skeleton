@@ -6,6 +6,43 @@ const MAX_ROWS: usize = 4;
 /// Maximum number of columns the AI can handle.
 const MAX_COLS: usize = 5;
 
+/// An invalid board size or move.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ChompError {
+    /// Board dimensions are zero or exceed the supported limits.
+    InvalidSize {
+        /// The requested number of rows.
+        nrows: usize,
+        /// The requested number of columns.
+        ncols: usize,
+    },
+    /// A move is outside the board or selects an eaten square.
+    InvalidMove {
+        /// The requested row, starting from zero.
+        row: usize,
+        /// The requested column, starting from zero.
+        col: usize,
+    },
+}
+
+impl std::fmt::Display for ChompError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::InvalidSize { nrows, ncols } => {
+                write!(f, "invalid board size: {nrows} rows, {ncols} columns")
+            }
+            Self::InvalidMove { row, col } => {
+                write!(
+                    f,
+                    "invalid move at ({row}, {col}): expected an uneaten square"
+                )
+            }
+        }
+    }
+}
+
+impl std::error::Error for ChompError {}
+
 /// A Chomp board.
 ///
 /// Replace this unit struct with a struct containing the fields
@@ -16,35 +53,34 @@ pub struct Chomp;
 impl Chomp {
     /// Make a new Chomp board with the given size for this game.
     ///
-    /// # Panics
-    /// Panics if the requested board size is larger than the AI
-    /// can handle, or has zero rows or columns.
-    pub fn new(nrows: usize, ncols: usize) -> Self {
-        assert!(nrows > 0, "not enough rows to play");
-        assert!(ncols > 0, "not enough columns to play");
-        assert!(
-            nrows <= MAX_ROWS,
-            "too many rows ({} > {}) for AI",
-            nrows,
-            MAX_ROWS
-        );
-        assert!(
-            ncols <= MAX_COLS,
-            "too many columns ({} > {}) for AI",
-            ncols,
-            MAX_COLS
-        );
+    /// # Errors
+    /// Returns [`ChompError::InvalidSize`] unless `nrows` is in
+    /// `1..=4` and `ncols` is in `1..=5`. Invalid sizes must not panic.
+    pub fn new(nrows: usize, ncols: usize) -> Result<Self, ChompError> {
+        if nrows == 0 || ncols == 0 || nrows > MAX_ROWS || ncols > MAX_COLS {
+            return Err(ChompError::InvalidSize { nrows, ncols });
+        }
         todo!()
     }
 
     /// Make a move on the current board, "eating" all cells
     /// below `row` and to the right of `col` inclusive.
-    pub fn make_move(&mut self, row: usize, col: usize) {
+    /// Returns `Ok(())` after a valid move. Eating the poison square
+    /// at `(0, 0)` is a valid move that ends the game.
+    ///
+    /// # Errors
+    /// Returns [`ChompError::InvalidMove`] if the coordinates are
+    /// outside the logical board or the selected square is already
+    /// eaten. This includes every move after the poison is eaten.
+    /// Invalid moves must leave the board unchanged and must not panic.
+    pub fn make_move(&mut self, row: usize, col: usize) -> Result<(), ChompError> {
         todo!("make a move at ({row}, {col})")
     }
 
     /// Returns `Some` winning move for this position as `(row, col)`.
     /// Returns `None` if there is no winning move in this position.
+    /// This includes losing positions, a board containing only the
+    /// poison square, and any board where the poison is already eaten.
     ///
     /// # Strategy
     ///
@@ -67,9 +103,20 @@ impl Chomp {
 }
 
 #[test]
-fn test_winning_move() {
-    let mut c = Chomp::new(2, 2);
+fn test_winning_move() -> Result<(), ChompError> {
+    let mut c = Chomp::new(2, 2)?;
     assert!(c.winning_move().is_some());
-    c.make_move(1, 1);
+    c.make_move(1, 1)?;
     assert!(c.winning_move().is_none());
+    Ok(())
+}
+
+#[test]
+fn test_invalid_sizes() {
+    for (nrows, ncols) in [(0, 1), (1, 0), (0, 0), (5, 1), (1, 6), (usize::MAX, 1)] {
+        assert!(matches!(
+            Chomp::new(nrows, ncols),
+            Err(ChompError::InvalidSize { .. })
+        ));
+    }
 }
