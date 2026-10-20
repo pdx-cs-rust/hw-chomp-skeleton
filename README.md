@@ -12,9 +12,10 @@ add helper functions or methods.
 
 Follow the [assignment] for CLI instructions. Create `src/main.rs`
 for your program; Cargo will detect it as the `chomp` binary.
-Choose your own prompts, input format, display, and helper
-functions. Submit a complete gameplay transcript as
-`gameplay.txt` for human review of the CLI.
+Choose your own prompts, input format, layout, and helper
+functions. Use `#` for uneaten squares and `.` for eaten squares.
+Submit a complete gameplay transcript as `gameplay.txt` for
+review of the CLI.
 
 [assignment]: https://github.com/pdx-cs-rust/rust-course-notes/blob/main/assignments/chomp/assignment.md
 
