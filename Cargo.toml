@@ -7,6 +7,3 @@ license-file = "LICENSE.txt"
 
 [lib]
 name = "chomp_ai"
-
-[[bin]]
-name = "chomp"
