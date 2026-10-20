@@ -1,0 +1,29 @@
+$ cargo run --quiet -- 3 2
+##
+##
+##
+Your move (row col): 2 1
+##
+##
+#.
+Computer: 2 0
+##
+##
+..
+Your move (row col): 1 1
+##
+#.
+..
+Computer: 1 0
+##
+..
+..
+Your move (row col): 0 1
+#.
+..
+..
+Computer: 0 0
+..
+..
+..
+You win!

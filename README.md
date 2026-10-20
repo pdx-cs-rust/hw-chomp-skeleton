@@ -15,6 +15,10 @@ Choose your own prompts, input format, and display, and adapt its
 private helpers as needed. Submit a complete gameplay transcript
 as `gameplay.txt` for human review of the CLI.
 
+See [sample-gameplay.txt](sample-gameplay.txt) for a complete
+three-row, two-column game recorded from the reference solution.
+Your prompts and board display may look different.
+
 Build with `cargo build`. If you use command-line size arguments,
 run a three-row, four-column game with `cargo run -- 3 4`.
 The skeleton compiles, but its `todo!()` placeholders and game
