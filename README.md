@@ -39,3 +39,8 @@ and any issues you encountered. Then **delete this comment**.*
 
 This work is licensed under the "MIT License". Please see
 `LICENSE.txt` in this distribution for license terms.
+
+# AI Acknowledgement
+
+Codex assisted in the preparation of this skeleton, starting
+from an original assignment by Bart Massey.
