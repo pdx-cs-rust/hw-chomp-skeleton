@@ -1,3 +1,21 @@
+Scope of this license
+
+The MIT License below applies only to the provided skeleton
+code and documentation. It does not apply to student-authored
+additions or set the license of a completed assignment as a
+whole.
+
+Students are not required to publish their completed work or
+release their own contributions under the MIT License. The
+copyright notice below refers only to the provided skeleton,
+not to student contributions.
+
+If you redistribute copies or substantial portions of the
+provided skeleton, retain its copyright and permission
+notices as required below.
+
+MIT License (provided skeleton only)
+
 Copyright © 2023 Bart Massey
 
 [This work is licensed under the "MIT License"]
