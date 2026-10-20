@@ -6,15 +6,19 @@ This is starter code for the game of
 library and the command-line program to play against its AI.
 
 The Rustdoc comments in `src/lib.rs` define the library interface
-and behavior. Those in `src/main.rs` define the command-line
-arguments, game loop, input handling, and output requirements.
-These comments are part of the assignment specification.
-You may choose the board representation and add helper functions
-or methods. Keep the supplied public types and method signatures.
+and behavior for automated testing. Keep those public types and
+method signatures. You may choose the board representation and
+add helper functions or methods.
 
-Build with `cargo build` and run a three-row, four-column game
-with `cargo run -- 3 4`. The skeleton compiles, but its `todo!()`
-placeholders and game tests require your implementation.
+The comments in `src/main.rs` outline a simple playable CLI.
+Choose your own prompts, input format, and display, and adapt its
+private helpers as needed. Submit a complete gameplay transcript
+as `gameplay.txt` for human review of the CLI.
+
+Build with `cargo build`. If you use command-line size arguments,
+run a three-row, four-column game with `cargo run -- 3 4`.
+The skeleton compiles, but its `todo!()` placeholders and game
+tests require your implementation.
 
 *Update this README to describe your implementation, testing,
 and any issues you encountered. Then **delete this comment**.*

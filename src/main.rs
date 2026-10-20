@@ -1,63 +1,31 @@
 //! Command-line Chomp player
 //! Your Name and Bart Massey 2023
 //!
-//! # Game loop
+//! Build a simple interface for playing against your library's AI:
 //!
-//! The human moves first. Each turn:
+//! 1. Get a board size, using prompts or command-line arguments.
+//! 2. Display the board and ask the human for a move.
+//! 3. Make the human move. If poison was eaten, announce the loss.
+//! 4. Otherwise, get a winning computer move from the library. If none
+//!    exists, choose another uneaten nonpoison square if possible, or
+//!    eat poison if it is the only square left. Choosing the rightmost
+//!    square in the lowest nonempty row is a simple fallback.
+//! 5. Show the computer's move. If poison was eaten, announce the win;
+//!    otherwise, continue playing.
 //!
-//! 1. Display the current board.
-//! 2. Prompt for a legal human move, retrying invalid input.
-//! 3. Make the human move. If poison was eaten, announce that the human
-//!    lost (for example, "you lose") and exit successfully immediately.
-//! 4. Otherwise, make any winning computer move if one exists. When
-//!    none exists, eat the rightmost square in the lowest nonempty row.
-//!    If only poison remains, this fallback eats the poison square.
-//! 5. Report the computer's move as a zero-based row followed by a
-//!    column, identifying it as the computer's move. For example,
-//!    "computer: 1 2". If poison was eaten, announce that the human won
-//!    (for example, "you win") and exit successfully immediately.
+//! The human moves first. Stop as soon as either player eats poison.
+//! Choose prompts and a board display that make the game easy to play.
+//! You may assume the human follows your input instructions; elaborate
+//! error handling is not required. Adapt these private helpers as needed.
 //!
-//! Check for game over after each move, before any further move or
-//! input prompt. The next turn displays the board after the computer's
-//! move. Additional board displays after human moves, on retries, or
-//! at game end are allowed, but must always show the current state.
-//!
-//! # Interaction
-//!
-//! Prompt and diagnostic wording, capitalization, punctuation, and
-//! spacing are flexible. Identify prompts as requests for a move and
-//! computer replies as computer moves. Keep each computer reply on its
-//! own line, with its row and column in that order. Keep prompts,
-//! replies, diagnostics, and results outside the board grid.
-//! Write boards, prompts, computer moves, and results to standard output.
-//! Flush output before waiting for input so prompts and boards are
-//! visible to a human or a PTY-based grader. Use ordinary text output;
-//! do not require terminal cursor movement, colors, or screen clearing.
-//!
-//! End-of-input before the game finishes cancels the game: exit with
-//! status zero without announcing a winner or requesting more input.
-//! An actual input/output error must produce a diagnostic on standard
-//! error and a nonzero exit status, without panicking. A completed game
-//! exits with status zero whether the human won or lost.
-//!
-//! For example, a complete one-row, two-column game might look like
-//! this, including the human's input echoed by the terminal:
-//!
-//! ```text
-//! ##
-//! Your move (row col): 0 1
-//! Computer: 0 0
-//! You win!
-//! ```
+//! The CLI will be reviewed through your submitted gameplay transcript.
+//! Show a complete game with human and computer moves, changing boards,
+//! and the final result. The library will be tested automatically.
 
 use chomp_ai::*;
 
-/// Display the board as one line per logical row, from top to bottom.
-/// Each row has one `#` for each uneaten square and one `.` for each
-/// eaten square, from left to right. Whitespace between markers or
-/// around rows is allowed. Put labels and other text outside the grid.
-/// Print each row on a separate line, including a newline after the last
-/// row. For example, this is a four-row, five-column board:
+/// Display a readable board. For example, use `#` for uneaten squares
+/// and `.` for eaten squares:
 ///
 /// ```text
 /// #####
@@ -66,49 +34,29 @@ use chomp_ai::*;
 /// #....
 /// ```
 ///
-/// # Errors
-/// Return an input/output error if writing the board fails.
-fn show_posn(posn: &Chomp) -> std::io::Result<()> {
+/// You may add row and column labels or choose another clear display.
+fn show_posn(posn: &Chomp) {
     todo!("display the board {posn:?}")
 }
 
-/// Prompt for a legal human move without changing the board.
-/// Read one line containing exactly two nonnegative decimal integers:
-/// a zero-based row followed by a column, separated by whitespace.
-/// Accept leading and trailing whitespace, multiple spaces, and tabs.
-/// For example:
+/// Prompt for and read a human move, without changing the board.
+/// One simple input format is a zero-based row followed by a column:
 ///
 /// ```text
 /// 2 3
 /// ```
-/// Return `Ok(Some((row, col)))` for a legal move: the selected square
-/// must be uneaten and inside the logical board. Selecting `(0, 0)` is
-/// legal while the poison remains, although it loses the game.
-/// Blank lines, missing/extra fields, negative or unparseable numbers,
-/// out-of-range coordinates, and eaten squares are invalid input.
-/// Explain invalid input and prompt again without changing the board
-/// or allowing a computer turn. Flush output before each input read.
 ///
-/// Return `Ok(None)` on end-of-input, including while retrying a move.
-/// Do not treat end-of-input as invalid input and retry forever.
-///
-/// # Errors
-/// Return an input/output error if reading or flushing fails.
-fn user_move(posn: &Chomp) -> std::io::Result<Option<(usize, usize)>> {
+/// Return `Some((row, col))` for a move you can use, or `None` if no
+/// move was obtained. The caller can ask again or end the game.
+fn user_move(posn: &Chomp) -> Option<(usize, usize)> {
     todo!("read a move for the board {posn:?}")
 }
 
-/// Play a game, as described above.
+/// Play a game using the library and the helpers above.
+/// You may prompt for the board size or accept rows and columns as
+/// command-line arguments. For an interface using arguments, a
+/// three-row, four-column game could be started with:
 ///
-/// Accept exactly two command-line arguments: rows, then columns.
-/// Both must be decimal integers accepted by `Chomp::new`: `1..=4`
-/// rows and `1..=5` columns. Missing or extra arguments, negative or
-/// unparseable values, zero, and oversized dimensions are errors.
-/// On an argument error, print a diagnostic to standard error and exit
-/// with a nonzero status without starting a game or panicking.
-/// Handle any library or input/output errors without panicking.
-///
-/// Thus, a typical run of the program on a 3×4 board might look like
 /// ```text
 /// cargo run -- 3 4
 /// ```
