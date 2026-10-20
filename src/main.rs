@@ -15,6 +15,10 @@
 //!
 //! The human moves first. Stop as soon as either player eats poison.
 //! Choose prompts and a board display that make the game easy to play.
+//! Produce a trace roughly like `sample-gameplay.txt`: show the initial
+//! board, prompt for human moves, identify computer moves, display the
+//! board after each move, and announce the final result. Exact wording
+//! and display layout may differ, but the game should be easy to follow.
 //! You may assume the human follows your input instructions; elaborate
 //! error handling is not required. Adapt these private helpers as needed.
 //!

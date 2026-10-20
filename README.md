@@ -17,7 +17,10 @@ as `gameplay.txt` for human review of the CLI.
 
 See [sample-gameplay.txt](sample-gameplay.txt) for a complete
 three-row, two-column game recorded from the reference solution.
-Your prompts and board display may look different.
+Your CLI should produce a roughly similar trace: an initial
+board, human prompts and moves, identified computer moves,
+updated boards after each move, and the final result. Your
+wording and display layout may differ.
 
 Build with `cargo build`. If you use command-line size arguments,
 run a three-row, four-column game with `cargo run -- 3 4`.
