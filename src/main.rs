@@ -12,6 +12,7 @@
 //!     available square in that row
 //! * Makes the computer move on the board
 //! * Displays the computer move
+//!
 //! This continues until the game is over,
 //! at which point either "you lose" or "you win"
 //! is printed depending on the outcome.
@@ -20,27 +21,29 @@ use chomp_ai::*;
 
 /// Display the current board. This should produce output in this format:
 ///
-///    #####
-///    #####
-///    ####.
-///    #....
-///
+/// ```text
+/// #####
+/// #####
+/// ####.
+/// #....
+/// ```
 fn show_posn(posn: &Chomp) {
-    todo!()
+    todo!("display the board {posn:?}")
 }
 
 /// Get a move from the human player. The human should
 /// supply the move as a row and column (starting from 0)
 /// separated by a space, like this.
 ///
-///    2 3
-///
+/// ```text
+/// 2 3
+/// ```
 /// If the human makes a "bad" move (badly formatted or
 /// illegal), this function returns `None`. Otherwise it
 /// returns `Some` row and column coordinates of the human
 /// move.
 fn user_move(posn: &Chomp) -> Option<(usize, usize)> {
-    todo!()
+    todo!("read a move for the board {posn:?}")
 }
 
 /// Play a game, as described above.
@@ -56,5 +59,7 @@ fn user_move(posn: &Chomp) -> Option<(usize, usize)> {
 /// cargo run 3 4
 /// ```
 fn main() {
+    // Keep these helpers referenced until the game loop is implemented.
+    let _ = (show_posn, user_move);
     todo!()
 }
