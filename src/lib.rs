@@ -7,18 +7,11 @@ const MAX_ROWS: usize = 4;
 const MAX_COLS: usize = 5;
 
 /// A Chomp board.
+///
+/// Replace this unit struct with a struct containing the fields
+/// needed for your chosen board representation.
 #[derive(Debug, Clone)]
-pub struct Chomp {
-    /// The number of rows for this game.
-    pub nrows: usize,
-
-    /// The number of columns for this game.
-    pub ncols: usize,
-
-    /// The board. `true` is an un-eaten square, `false is
-    /// an eaten square.
-    pub board: [[bool; MAX_COLS]; MAX_ROWS],
-}
+pub struct Chomp;
 
 impl Chomp {
     /// Make a new Chomp board with the given size for this game.

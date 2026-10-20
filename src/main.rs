@@ -1,4 +1,4 @@
-//! Command-line Chomp player  
+//! Command-line Chomp player
 //! Your Name and Bart Massey 2023
 //!
 //! This player repeatedly
@@ -45,7 +45,7 @@ fn user_move(posn: &Chomp) -> Option<(usize, usize)> {
 }
 
 /// Play a game, as described above.
-/// 
+///
 /// The program should take two command-line arguments
 /// representing the board size: a number of rows and a
 /// number of columns for the board. The program should fail
