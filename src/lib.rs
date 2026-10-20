@@ -47,11 +47,14 @@ impl std::error::Error for ChompError {}
 ///
 /// Replace this unit struct with a struct containing the fields
 /// needed for your chosen board representation.
+/// Clones must have the same dimensions and squares, with independent
+/// state: making a move on a clone must not change the original.
 #[derive(Debug, Clone)]
 pub struct Chomp;
 
 impl Chomp {
     /// Make a new Chomp board with the given size for this game.
+    /// All squares within the requested dimensions start uneaten.
     ///
     /// # Errors
     /// Returns [`ChompError::InvalidSize`] unless `nrows` is in
@@ -63,8 +66,27 @@ impl Chomp {
         todo!()
     }
 
+    /// Return the logical board dimensions as `(nrows, ncols)`.
+    /// These are the original dimensions, even after squares are eaten.
+    /// This method must not change the board.
+    pub fn dimensions(&self) -> (usize, usize) {
+        todo!()
+    }
+
+    /// Return whether the square at `(row, col)` is uneaten.
+    /// Coordinates start from zero, with `(0, 0)` at the upper left.
+    /// Return `false` for eaten squares and for coordinates outside the
+    /// logical dimensions, including arbitrarily large coordinates.
+    /// This method must not change the board or panic.
+    pub fn is_present(&self, row: usize, col: usize) -> bool {
+        todo!("inspect the square at ({row}, {col})")
+    }
+
     /// Make a move on the current board, "eating" all cells
     /// below `row` and to the right of `col` inclusive.
+    /// That is, remove each square whose row is at least `row` and whose
+    /// column is at least `col`. Leave all other squares unchanged.
+    /// The logical dimensions do not change.
     /// Returns `Ok(())` after a valid move. Eating the poison square
     /// at `(0, 0)` is a valid move that ends the game.
     ///
@@ -81,6 +103,10 @@ impl Chomp {
     /// Returns `None` if there is no winning move in this position.
     /// This includes losing positions, a board containing only the
     /// poison square, and any board where the poison is already eaten.
+    /// Any winning move is acceptable when several exist. A winning
+    /// move selects an uneaten square other than `(0, 0)` and leaves
+    /// the opponent without a winning move.
+    /// This method must not change the board.
     ///
     /// # Strategy
     ///
