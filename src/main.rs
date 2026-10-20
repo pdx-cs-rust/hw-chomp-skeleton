@@ -17,7 +17,6 @@
 //! is printed depending on the outcome.
 
 use chomp_ai::*;
-use prompted::input;
 
 /// Display the current board. This should produce output in this format:
 ///

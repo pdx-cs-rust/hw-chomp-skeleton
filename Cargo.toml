@@ -10,6 +10,3 @@ name = "chomp_ai"
 
 [[bin]]
 name = "chomp"
-
-[dependencies]
-prompted = "0.2.7"
